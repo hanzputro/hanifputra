@@ -1,0 +1,678 @@
+[
+  {
+    "fields": [
+      {
+        "name": "value",
+        "type": "string"
+      },
+      {
+        "name": "label",
+        "type": "string"
+      }
+    ],
+    "name": "tag",
+    "type": "object"
+  },
+  {
+    "of": [
+      {
+        "type": "tag"
+      }
+    ],
+    "name": "tags",
+    "type": "array"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "blockContent"
+      },
+      {
+        "options": {
+          "predefinedTags": [
+            {
+              "label": "Hanif Putra",
+              "value": "Hanif Putra"
+            },
+            {
+              "label": "Portfolio Website",
+              "value": "Portfolio Website"
+            },
+            {
+              "label": "Developer",
+              "value": "Developer"
+            },
+            {
+              "label": "Designer",
+              "value": "Designer"
+            },
+            {
+              "label": "Frontend Developer",
+              "value": "Frontend Developer"
+            },
+            {
+              "label": "Fullstack Developer",
+              "value": "Fullstack Developer"
+            },
+            {
+              "label": "Frontend Engineer",
+              "value": "Frontend Engineer"
+            },
+            {
+              "label": "Fullstack Engineer",
+              "value": "Fullstack Engineer"
+            },
+            {
+              "label": "Web App Developer",
+              "value": "Web App Developer"
+            }
+          ]
+        },
+        "name": "keywords",
+        "type": "tags"
+      },
+      {
+        "name": "creator",
+        "type": "string"
+      },
+      {
+        "name": "locale",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "openGraphImage",
+        "type": "image"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "xImage",
+        "type": "image"
+      },
+      {
+        "options": {
+          "accept": "application/json"
+        },
+        "name": "manifest",
+        "type": "file"
+      }
+    ],
+    "name": "SEO",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "blockContent"
+      },
+      {
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "options": {
+          "predefinedTags": [
+            {
+              "label": "Frontend Developer",
+              "value": "frontend-developer"
+            },
+            {
+              "label": "Fullstack Developer",
+              "value": "fullstack-developer"
+            },
+            {
+              "label": "Designer",
+              "value": "designer"
+            }
+          ]
+        },
+        "name": "job",
+        "type": "tags"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "thumbnail",
+        "type": "image"
+      },
+      {
+        "name": "thumbnailHeight",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "projectCollection",
+    "type": "document",
+    "title": "Projects"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Design",
+              "value": "design"
+            },
+            {
+              "title": "Code",
+              "value": "code"
+            }
+          ]
+        },
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "skillCollection",
+    "type": "document",
+    "title": "Skills"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "socialMediaCollection",
+    "type": "document",
+    "title": "Social Media"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "predefinedTags": [
+            {
+              "label": "Bring",
+              "value": "bring"
+            },
+            {
+              "label": "To Life",
+              "value": "to-life"
+            }
+          ]
+        },
+        "name": "textHero",
+        "type": "tags"
+      },
+      {
+        "options": {
+          "predefinedTags": [
+            {
+              "label": "FRONTEND",
+              "value": "frontend"
+            },
+            {
+              "label": "ENGINEER",
+              "value": "engineer"
+            },
+            {
+              "label": "DEVELOPER",
+              "value": "developer"
+            }
+          ]
+        },
+        "name": "textShadow",
+        "type": "tags"
+      },
+      {
+        "name": "description",
+        "type": "blockContent"
+      },
+      {
+        "options": {
+          "predefinedTags": [
+            {
+              "label": "Design",
+              "value": "design",
+              "color": "linear-gradient(60deg, rgba(255,68,111,1) 0%, rgba(255,13,13,1) 100%)"
+            },
+            {
+              "label": "Code",
+              "value": "code",
+              "color": "linear-gradient(60deg, rgba(0,155,119,1) 0%, rgba(0,103,2,1) 100%)"
+            },
+            {
+              "label": "Idea",
+              "value": "idea",
+              "color": "linear-gradient(60deg, rgba(68,204,255,1) 0%, rgba(0,32,250,1) 100%)"
+            }
+          ]
+        },
+        "name": "slogan",
+        "type": "tags"
+      },
+      {
+        "name": "urlSpline",
+        "type": "string"
+      }
+    ],
+    "name": "home",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "textShadow",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "options": {
+              "filter": "category == $category",
+              "filterParams": {
+                "category": "design"
+              }
+            },
+            "to": [
+              {
+                "type": "skillCollection"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to skills"
+          }
+        ],
+        "name": "design",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "options": {
+              "filter": "category == $category",
+              "filterParams": {
+                "category": "code"
+              }
+            },
+            "to": [
+              {
+                "type": "skillCollection"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to skills"
+          }
+        ],
+        "name": "code",
+        "type": "array"
+      }
+    ],
+    "name": "skill",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "textShadow",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "projectCollection"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to projects"
+          }
+        ],
+        "name": "project",
+        "type": "array"
+      }
+    ],
+    "name": "project",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "textShadow",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "blockContent"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "socialMediaCollection"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to social media"
+          }
+        ],
+        "name": "socialMedia",
+        "type": "array"
+      }
+    ],
+    "name": "contact",
+    "type": "document"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/"
+                              ],
+                              "allowRelative": false,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "href",
+                  "type": "url",
+                  "title": "URL"
+                }
+              ],
+              "name": "link",
+              "type": "object",
+              "title": "URL"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "Strong"
+            },
+            {
+              "value": "em",
+              "title": "Emphasis"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "Bullet"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "Normal"
+          },
+          {
+            "value": "h1",
+            "title": "H1"
+          },
+          {
+            "value": "h2",
+            "title": "H2"
+          },
+          {
+            "value": "h3",
+            "title": "H3"
+          },
+          {
+            "value": "h4",
+            "title": "H4"
+          },
+          {
+            "value": "blockquote",
+            "title": "Quote"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alternative Text"
+          }
+        ],
+        "type": "image"
+      }
+    ],
+    "name": "blockContent",
+    "type": "array"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "bio",
+        "type": "array"
+      }
+    ],
+    "name": "author",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      }
+    ],
+    "name": "category",
+    "type": "document"
+  }
+]

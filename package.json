@@ -1,15 +1,21 @@
 {
-  "name": "hanifputra-next13",
+  "name": "hanifputra",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && sanity manifest extract --path public/studio/static",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "predev": "npm run typegen",
+    "format": "npx prettier --write . --ignore-path .gitignore",
+    "lint:fix": "npm run format && npm run lint -- --fix",
+    "type-check": "tsc --noEmit",
+    "typegen": "sanity schema extract && sanity typegen generate"
   },
   "dependencies": {
     "@portabletext/react": "^3.2.1",
+    "@sanity/client": "^7.11.2",
     "@sanity/icons": "^3.4.0",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.57.4",
@@ -33,7 +39,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "18.3.1",
     "react-responsive-masonry": "^2.1.7",
-    "sanity": "^3.57.4",
+    "sanity": "^4.10.1",
     "sanity-plugin-tags": "^2.0.2",
     "styled-components": "^6.1.13",
     "tailwindcss": "3.3.1",

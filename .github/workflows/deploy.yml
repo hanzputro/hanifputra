@@ -24,7 +24,7 @@ jobs:
       - name: Set Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 22.19.0   # whatever version your gatsby uses (you can find that in package.json under 'engine')
+          node-version: 22.x   # whatever version uses (you can find that in package.json under 'engine')
 
       - name: Run install
         uses: borales/actions-yarn@v4
