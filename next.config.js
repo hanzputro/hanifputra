@@ -1,8 +1,3 @@
-// const { loadEnvConfig } = require("@next/env");
-
-// const projectDir = process.cwd();
-// loadEnvConfig(projectDir);
-
 /**
  * Default dotenv variables flow in Next.js doesn't support custom modes: staging, qa, etc.
  * Here we initialize our own custom dotenv-flow with dotenv-expand.
@@ -10,7 +5,10 @@
  */
 
 /** @type {import('next').NextConfig} */
+
 const runtimeCaching = require("next-pwa/cache");
+const {client} = require('./sanity/lib/client.js')
+
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
@@ -21,9 +19,22 @@ const withPWA = require("next-pwa")({
 
 const nextConfig = withPWA({
   // next config
-  basePath: "/portfolio",
   typescript: {
     ignoreBuildErrors: true,
+  },
+  swcMinify: true,
+  async headers() {
+    return [
+      {
+        source: '/robots.txt',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "connect-src 'self';",
+          },
+        ],
+      },
+    ]
   },
   images: {
     remotePatterns: [
