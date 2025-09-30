@@ -1,21 +1,13 @@
 "use client";
-import Header, { NavigationType } from "@/components/Header";
-import Hero from "@/components/Section/Hero";
-import Project, { ProjectDetailType } from "@/components/Section/Project";
-import Contact, { SocialMediaDetailType } from "@/components/Section/Contact";
-import Skill, { SkillType } from "@/components/Section/Skill";
+
+import Header from "@/components/Header";
+import { client } from "@/sanity/lib/client";
+import Hero, { HomeType } from "@/components/Section/Hero";
+import Project from "@/components/Section/Project";
+import Contact from "@/components/Section/Contact";
+import Skill from "@/components/Section/Skill";
 import { useEffect, useRef, useState } from "react";
 import jsonNavigationData from "@/data/navigation.json";
-import jsonSkillData from "@/data/skill.json";
-import jsonProjectData from "@/data/project.json";
-import jsonSocialMediaData from "@/data/socialMedia.json";
-
-interface HomeProps {
-  navigation: NavigationType[];
-  project: ProjectDetailType[];
-  socialMedia: SocialMediaDetailType[];
-  skill: SkillType[];
-}
 
 export interface SectionRefProps {
   heroRef: any;
@@ -23,6 +15,13 @@ export interface SectionRefProps {
   projectRef: any;
   contactRef: any;
 }
+
+type DataType = {
+  home: HomeType;
+  skill: any;
+  project: any;
+  contact: any;
+};
 
 export default function Home() {
   const [currentHash, setCurrentHash] = useState("");
@@ -32,19 +31,47 @@ export default function Home() {
   const projectRef = useRef<any>(null);
   const contactRef = useRef<any>(null);
 
-  const navigation = jsonNavigationData.navigation;
-  const skill = jsonSkillData.skill;
-  const project = jsonProjectData.project;
-  const socialMedia = jsonSocialMediaData.socialMedia;
+  const [data, setData] = useState<DataType>();
+  const [loading, setLoading] = useState(true);
+
+  const fetchAll = async () => {
+    const home = "*[_type == 'home'][0]";
+    const skill =
+      "*[_type == 'skill'][0]{title,textShadow,'design':design[]->{title,category,'image':image.asset->url},'code':code[]->{title,category,'image':image.asset->url}}";
+    const project =
+      "*[_type == 'project'][0]{title,textShadow,'project':project[]->{title,description,url,job,'thumbnail':thumbnail.asset->url,thumbnailHeight,'image':image.asset->url}}";
+    const contact =
+      "*[_type == 'contact'][0]{title,textShadow,description,'socialMedia':socialMedia[]->{title,url,'image':image.asset->url}}";
+
+    const allQueries = `{ "home": ${home}, "skill": ${skill}, "project": ${project}, "contact": ${contact} }`;
+    try {
+      const res = await client.fetch(allQueries);
+      setData(res);
+    } catch (error) {
+      console.error("Failed to fetch:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setSectionRef({
-      heroRef: heroRef,
-      skillRef: skillRef,
-      projectRef: projectRef,
-      contactRef: contactRef,
-    });
+    if (!data) {
+      fetchAll();
+    }
   }, []);
+
+  const navigation = jsonNavigationData.navigation;
+
+  useEffect(() => {
+    if (!loading) {
+      setSectionRef({
+        heroRef: heroRef,
+        skillRef: skillRef,
+        projectRef: projectRef,
+        contactRef: contactRef,
+      });
+    }
+  }, [loading]);
 
   return (
     <>
@@ -54,33 +81,41 @@ export default function Home() {
         currentHash={currentHash}
       />
       <main className="flex min-h-screen flex-col items-center justify-between">
-        <div className="w-full overflow-hidden" ref={heroRef}>
-          <Hero setCurrentHash={setCurrentHash} currentHash={currentHash} />
-        </div>
+        {!loading && data ? (
+          <>
+            <div className="w-full overflow-hidden" ref={heroRef}>
+              <Hero
+                setCurrentHash={setCurrentHash}
+                currentHash={currentHash}
+                home={data.home}
+              />
+            </div>
 
-        <div className="w-full overflow-hidden" ref={skillRef}>
-          <Skill
-            skill={skill}
-            setCurrentHash={setCurrentHash}
-            currentHash={currentHash}
-          />
-        </div>
+            <div className="w-full overflow-hidden" ref={skillRef}>
+              <Skill
+                setCurrentHash={setCurrentHash}
+                currentHash={currentHash}
+                skill={data.skill}
+              />
+            </div>
 
-        <div className="w-full overflow-hidden" ref={projectRef}>
-          <Project
-            project={project}
-            setCurrentHash={setCurrentHash}
-            currentHash={currentHash}
-          />
-        </div>
+            <div className="w-full overflow-hidden" ref={projectRef}>
+              <Project
+                setCurrentHash={setCurrentHash}
+                currentHash={currentHash}
+                project={data.project}
+              />
+            </div>
 
-        <div className="w-full overflow-hidden" ref={contactRef}>
-          <Contact
-            socialMedia={socialMedia}
-            setCurrentHash={setCurrentHash}
-            currentHash={currentHash}
-          />
-        </div>
+            <div className="w-full overflow-hidden" ref={contactRef}>
+              <Contact
+                setCurrentHash={setCurrentHash}
+                currentHash={currentHash}
+                contact={data.contact}
+              />
+            </div>
+          </>
+        ) : null}
       </main>
     </>
   );

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { PortableText } from "@portabletext/react";
 import Spline from "@splinetool/react-spline";
 import { Andada_Pro, Inter } from "next/font/google";
 import {
@@ -19,11 +20,29 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+type Option = {
+  label: string;
+  value: string;
+  color?: string;
+};
+
+export type HomeType = {
+  _id: string;
+  title: string;
+  textHero: Option[];
+  textShadow: Option[];
+  description: any;
+  slogan: Option[];
+  urlSpline: string;
+};
+
 interface HeroProps {
   setCurrentHash: (value: string) => void;
   currentHash: string;
+  home: HomeType;
 }
-const Hero = ({ setCurrentHash, currentHash }: HeroProps) => {
+
+function Hero({ setCurrentHash, currentHash, home }: HeroProps) {
   const homeRef = useRef<any>(null);
 
   const { scrollYProgress } = useScroll({
@@ -38,40 +57,20 @@ const Hero = ({ setCurrentHash, currentHash }: HeroProps) => {
   });
 
   const [seconds, setSeconds] = useState(0);
-  const wordArrays = useMemo(
-    () => [
-      {
-        name: "Design",
-        color:
-          "linear-gradient(60deg, rgba(255,68,111,1) 0%, rgba(255,13,13,1) 100%)",
-      },
-      {
-        name: "Codes",
-        color:
-          "linear-gradient(60deg, rgba(0,155,119,1) 0%, rgba(0,103,2,1) 100%)",
-      },
-      {
-        name: "Ideas",
-        color:
-          "linear-gradient(60deg, rgba(68,204,255,1) 0%, rgba(0,32,250,1) 100%)",
-      },
-    ],
-    []
-  );
-  const [quote, setQuote] = useState(wordArrays[2]);
+  const [quote, setQuote] = useState(home.slogan[2]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds > 1) {
         setSeconds(0);
-        setQuote(wordArrays[seconds]);
+        setQuote(home.slogan[seconds]);
       } else {
         setSeconds((seconds: number) => seconds + 1);
-        setQuote(wordArrays[seconds]);
+        setQuote(home.slogan[seconds]);
       }
     }, 4000);
     return () => clearInterval(interval);
-  }, [quote, seconds, wordArrays]);
+  }, [quote, seconds, home.slogan]);
 
   const tagVariants = {
     slide: {
@@ -146,45 +145,25 @@ const Hero = ({ setCurrentHash, currentHash }: HeroProps) => {
           animate="slide"
           className="relative flex items-center justify-center content-center flex-wrap w-full h-full"
         >
-          <motion.h1
-            variants={tagVariants}
-            animate="slide"
-            className={`${andadaPro.className} text-[90px] md:text-[140px] lg:text-[160px] block w-full leading-[1] md:leading-[0.8] tracking-[-10px] md:tracking-[-15px] lg:tracking-[-13px] text-[#f5f5f5] md:text-[#e2e2e2] opacity-0 blur-[1px]`}
-          >
-            WEBSITE
-          </motion.h1>
-          <motion.h1
-            variants={{
-              ...tagVariants,
-              slide: {
-                ...tagVariants.slide,
-                transition: {
-                  ...tagVariants.slide.transition,
-                  delay: 0.5,
+          {home.textShadow.map((textshadow, index) => (
+            <motion.h1
+              key={index}
+              variants={{
+                ...tagVariants,
+                slide: {
+                  ...tagVariants.slide,
+                  transition: {
+                    ...tagVariants.slide.transition,
+                    delay: index / 2,
+                  },
                 },
-              },
-            }}
-            animate="slide"
-            className={`${andadaPro.className} text-[90px] md:text-[140px] lg:text-[160px] block w-full leading-[1] md:leading-[0.8] tracking-[-10px] md:tracking-[-15px] lg:tracking-[-13px] text-[#f5f5f5] md:text-[#e2e2e2] opacity-0 blur-[1px]`}
-          >
-            APPLICATION
-          </motion.h1>
-          <motion.h1
-            variants={{
-              ...tagVariants,
-              slide: {
-                ...tagVariants.slide,
-                transition: {
-                  ...tagVariants.slide.transition,
-                  delay: 1,
-                },
-              },
-            }}
-            animate="slide"
-            className={`${andadaPro.className} text-[90px] md:text-[140px] lg:text-[160px] block w-full leading-[1] md:leading-[0.8] tracking-[-10px] md:tracking-[-15px] lg:tracking-[-13px] text-[#f5f5f5] md:text-[#e2e2e2] opacity-0 blur-[1px]`}
-          >
-            DEVELOPER
-          </motion.h1>
+              }}
+              animate="slide"
+              className={`${andadaPro.className} text-[90px] md:text-[140px] lg:text-[160px] block w-full leading-[1] md:leading-[0.8] tracking-[-10px] md:tracking-[-15px] lg:tracking-[-13px] text-[#f5f5f5] md:text-[#e2e2e2] opacity-0 blur-[1px]`}
+            >
+              {textshadow.label}
+            </motion.h1>
+          ))}
         </motion.div>
       </div>
 
@@ -195,7 +174,7 @@ const Hero = ({ setCurrentHash, currentHash }: HeroProps) => {
           animate="slide"
         >
           <span className="block">
-            Bring
+            {home.textHero[0].label}
             <AnimatePresence>
               {quote && (
                 <motion.span
@@ -206,23 +185,22 @@ const Hero = ({ setCurrentHash, currentHash }: HeroProps) => {
                   exit={{ y: 10, opacity: 0, background: quote.color }}
                   transition={{ type: "sring" }}
                 >
-                  {quote.name}
+                  {quote.label}
                 </motion.span>
               )}
             </AnimatePresence>
           </span>
-          To Life<span className="inline-block text-[#FFEE00]">_</span>
+          {home.textHero[1].label}
+          <span className="inline-block text-[#FFEE00]">_</span>
         </motion.h1>
 
-        <motion.p
-          className={`${inter.className} leading-[1.7] md:leading-[1.8] w-full md:w-[80%] lg:w-full opacity-0`}
+        <motion.div
+          className={`${inter.className} leading-[1.7] md:leading-[1.8] w-full opacity-0`}
           variants={descriptionVariants}
           animate="slide"
         >
-          Hi!, call me Hanif a Web App Developer. Interactive thinker, Love
-          smooth transitions, and code solver. Crafting design, code, and
-          interactive visualization is my passion ;)
-        </motion.p>
+          <PortableText value={home.description} />
+        </motion.div>
       </div>
 
       <motion.div
@@ -230,13 +208,10 @@ const Hero = ({ setCurrentHash, currentHash }: HeroProps) => {
         variants={frameVariants}
         animate="slide"
       >
-        <Spline
-          className="spline flex justify-center"
-          scene="https://prod.spline.design/6hifPTiDpKTAz3FH/scene.splinecode"
-        />
+        <Spline className="spline flex justify-center" scene={home.urlSpline} />
       </motion.div>
     </section>
   );
-};
+}
 
 export default Hero;

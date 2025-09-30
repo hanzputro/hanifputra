@@ -1,0 +1,65 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Set a branch name to trigger deployment
+  pull_request:
+  repository_dispatch:
+    types: [deploy]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Set Node.js 22.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.x   # whatever version uses (you can find that in package.json under 'engine')
+
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install # will run `yarn install` command
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # if needed
+
+      - name: yarn
+        env: # this stuff doesn't work but its a starting point
+          AUTHOR: ${{ vars.AUTHOR }}
+          DESCRIPTION: ${{ vars.DESCRIPTION }}
+          SANITY_API_PROJECT_ID: ${{ vars.SANITY_API_PROJECT_ID }}
+          SANITY_API_READ_TOKEN: ${{ vars.SANITY_API_READ_TOKEN }}
+          SANITY_API_WRITE_TOKEN: ${{ vars.SANITY_API_WRITE_TOKEN }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          NEXT_PUBLIC_SANITY_STUDIO_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_STUDIO_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_STUDIO_PROJECT_ID }}
+          TITLE: ${{ vars.TITLE }}
+          SANITY_READ_TOKEN: ${{ env.SANITY_READ_TOKEN }}
+          SANITY_PROJECT_ID: ${{ env.SANITY_PROJECT_ID }}
+          SANITY_PROJECT_DATASET: ${{ env.SANITY_PROJECT_DATASET }}
+          SANITY_LIVE_PREVIEW: ${{ env.SANITY_LIVE_PREVIEW }}
+        run: yarn & yarn setup
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        # If you're changing the branch from main,
+        # also change the `main` in `refs/heads/main`
+        # below accordingly. bump
+        if: ${{ github.ref == 'refs/heads/master' }}
+        with:
+          github_token: ${{ secrets.GITHUB_AUTH_TOKEN }}
+          publish_dir: ./public

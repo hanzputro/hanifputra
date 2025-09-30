@@ -7,36 +7,42 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
+import { PortableText } from "@portabletext/react";
+import Link from "next/link";
 
 const andadaPro = Andada_Pro({
   weight: ["600"],
   subsets: ["latin"],
 });
 
-export interface TagType {
-  name: string;
-}
+type Option = {
+  label: string;
+  value: string;
+};
 
-export interface ProjectDetailType {
+type ProjectCollection = {
   title: string;
-  tags: TagType[];
-  description: string;
-  image: string;
-  imageBlur: string;
+  description: any;
+  url: string;
+  job: Option[];
   thumbnail: string;
-  thumbnailBlur: string;
-  width: number;
-  height: number;
-  thumbWidth: number;
-  thumbHeight: number;
-}
+  thumbnailHeight: number;
+  image: string;
+};
+
+export type ProjectType = {
+  _id: string;
+  title: string;
+  textShadow: string;
+  project: ProjectCollection[];
+};
 
 export interface ImageListCustomType {
   blur: string;
 }
 
 interface ProjectProps {
-  project: ProjectDetailType[];
+  project: ProjectType;
   setCurrentHash: (value: string) => void;
   currentHash: string;
 }
@@ -77,7 +83,7 @@ const Project = ({ project, setCurrentHash, currentHash }: ProjectProps) => {
     ({ handleShowDetail }: galleryType) => {
       return (
         <>
-          {project?.map((item, idx) => {
+          {project.project.map((item, idx) => {
             return (
               <AnimatePresence key={item.title}>
                 {isDetailVisible && (
@@ -127,7 +133,7 @@ const Project = ({ project, setCurrentHash, currentHash }: ProjectProps) => {
                       }}
                     >
                       <motion.div
-                        className="fixed top-0 mb-5 py-4 px-4 md:p-6 w-[calc(100%-60px)]"
+                        className="fixed top-0 mb-5 py-4 px-4 md:p-6 w-[calc(100%-60px)] backdrop-blur-lg bg-white bg-opacity-30 z-10"
                         initial={{
                           opacity: 0,
                           y: -15,
@@ -142,34 +148,45 @@ const Project = ({ project, setCurrentHash, currentHash }: ProjectProps) => {
                           ease: "easeInOut",
                         }}
                       >
-                        <h2
-                          className={`${andadaPro.className} text-[26px] leading-[1.1] md:text-[30px] text-[#1f1f1f] mb-1`}
-                        >
-                          {item.title}
-                        </h2>
-                        <p className="text-sm md:text-lg mt-1">
-                          {item.description}
-                        </p>
-                        {item.tags.map((tag: { name: string }, idx) => (
+                        <div className="flex justify-start items-center">
+                          <h2
+                            className={`${andadaPro.className} text-[26px] leading-[1.1] md:text-[30px] text-[#1f1f1f] mb-1`}
+                          >
+                            {item.title}
+                          </h2>
+                          {item.url && (
+                            <Link
+                              href={item.url}
+                              target="_blank"
+                              className="relative flex justify-start w-[42px] h-[26px] ml-1 mb-1 cursor-pointer z-1"
+                            >
+                              <Image
+                                className="px-2"
+                                ref={projectRef}
+                                src="/assets/icons/ic-link.png"
+                                alt={item.title}
+                                fill={true}
+                              />
+                            </Link>
+                          )}
+                        </div>
+                        <PortableText value={item.description} />
+                        {item.job.map((tag, idx) => (
                           <span
                             key={idx}
                             className="text-[10px] border-[#FFEE00] bg-black border py-1 px-2 mr-2 rounded-lg font-semibold text-[#FFEE00]"
                           >
-                            {tag.name}
+                            {tag.label}
                           </span>
                         ))}
                       </motion.div>
                       <Image
-                        className="w-[800px] max-w-full pt-[120px] md:pt-[160px] px-10 mx-auto"
-                        ref={projectRef}
                         id={`thumb-${idx}`}
-                        src={`/assets/images/project/${item.image}`}
-                        blurDataURL={item.imageBlur}
+                        className="!relative !max-w-[800px] !w-full !h-fit pt-[120px] md:pt-[160px] px-10 mx-auto"
+                        ref={projectRef}
+                        src={item.image}
                         alt={item.title}
-                        placeholder="blur"
-                        width={item.width}
-                        height={item.height}
-                        priority
+                        fill={true}
                       />
                     </motion.div>
                   </motion.div>
@@ -199,7 +216,7 @@ const Project = ({ project, setCurrentHash, currentHash }: ProjectProps) => {
             ease: "easeInOut",
           }}
         >
-          WORKS
+          {project.textShadow}
         </motion.h2>
         <motion.h2
           className={`${andadaPro.className} text-[40px] md:text-[50px] absolute`}
@@ -211,19 +228,20 @@ const Project = ({ project, setCurrentHash, currentHash }: ProjectProps) => {
             ease: "easeInOut",
           }}
         >
-          Projects<span className="inline-block text-[#FFEE00]">_</span>
+          {project.title}
+          <span className="inline-block text-[#FFEE00]">_</span>
         </motion.h2>
       </div>
 
       <div className="mt-12 pb-20">
         <div className="columns-2 sm:columns-3 lg:columns-4 gap-3">
-          {project?.map((item, idx) => (
+          {project.project.map((item, idx) => (
             <div key={item.title}>
               <motion.div
                 key={idx}
                 className="mb-3"
                 style={{
-                  aspectRatio: handleGalleryAspectRatio(item.thumbHeight),
+                  aspectRatio: handleGalleryAspectRatio(item.thumbnailHeight),
                 }}
                 viewport={{ once: true }}
                 initial={{ opacity: 0, y: 50 }}
@@ -248,16 +266,13 @@ const Project = ({ project, setCurrentHash, currentHash }: ProjectProps) => {
                   }}
                 >
                   <Image
-                    className="w-full h-full object-contain  cursor-pointer"
+                    className="w-full h-full object-contain cursor-pointer"
                     ref={projectRef}
                     id={`thumb-${idx}`}
-                    src={`/assets/images/project/thumb/${item.thumbnail}`}
-                    blurDataURL={item.thumbnailBlur}
+                    src={item.thumbnail}
                     alt={item.title}
-                    placeholder="blur"
-                    width={item.thumbWidth}
-                    height={item.thumbHeight}
-                    priority
+                    width={400}
+                    height={item.thumbnailHeight}
                   />
                 </motion.div>
               </motion.div>

@@ -14,21 +14,22 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-interface SkillDetailType {
+type SkillCollection = {
   title: string;
-  image: string;
-  imageBlur: string;
-  height: number;
-  width: number;
-}
-
-export interface SkillType {
   category: string;
-  items: SkillDetailType[];
-}
+  image: string;
+};
+
+export type SkillType = {
+  _id: string;
+  title: string;
+  textShadow: string;
+  design: SkillCollection[];
+  code: SkillCollection[];
+};
 
 interface SkillProps {
-  skill: SkillType[];
+  skill: SkillType;
   setCurrentHash: (value: string) => void;
   currentHash: string;
 }
@@ -46,9 +47,6 @@ const Skill = ({ skill, setCurrentHash, currentHash }: SkillProps) => {
       setCurrentHash("#skill");
     }
   });
-
-  const skillDesigner = skill?.find((skill) => skill.category == "designer");
-  const skillDeveloper = skill?.find((skill) => skill.category == "developer");
 
   const titleVariants = {
     initial: { x: 70, opacity: 0 },
@@ -102,7 +100,7 @@ const Skill = ({ skill, setCurrentHash, currentHash }: SkillProps) => {
           whileInView="whileInView"
           viewport={{ once: true }}
         >
-          ABILITY
+          {skill.textShadow}
         </motion.h2>
         <motion.h2
           className={`${andadaPro.className} text-[40px] md:text-[50px] absolute`}
@@ -111,7 +109,8 @@ const Skill = ({ skill, setCurrentHash, currentHash }: SkillProps) => {
           whileInView="whileInView"
           viewport={{ once: true }}
         >
-          <span className="inline-block text-[#FFEE00]">_</span>Skills
+          <span className="inline-block text-[#FFEE00]">_</span>
+          {skill.title}
         </motion.h2>
       </div>
 
@@ -137,7 +136,7 @@ const Skill = ({ skill, setCurrentHash, currentHash }: SkillProps) => {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {skillDesigner?.items.map((skill, idx) => (
+            {skill.design.map((skill, idx) => (
               <motion.div
                 key={idx}
                 variants={{
@@ -152,12 +151,10 @@ const Skill = ({ skill, setCurrentHash, currentHash }: SkillProps) => {
               >
                 <Tooltip text={skill.title}>
                   <Image
-                    className="relative w-[64px] md:w-[84px]"
-                    src={`/assets/images/skill/${skill.image}`}
+                    className="!relative !w-[64px] md:!w-[84px] aspect-square"
+                    src={skill.image}
                     alt={skill.title}
-                    width={skill.width}
-                    height={skill.height}
-                    priority
+                    fill={true}
                   />
                 </Tooltip>
               </motion.div>
@@ -195,16 +192,14 @@ const Skill = ({ skill, setCurrentHash, currentHash }: SkillProps) => {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {skillDeveloper?.items.map((skill, idx) => (
+            {skill.code.map((skill, idx) => (
               <motion.div key={idx} variants={skillVariants}>
                 <Tooltip text={skill.title}>
                   <Image
-                    className="relative w-[64px] md:w-[84px]"
-                    src={`/assets/images/skill/${skill.image}`}
+                    className="!relative !w-[64px] md:!w-[84px] aspect-square"
+                    src={skill.image}
                     alt={skill.title}
-                    width={skill.width}
-                    height={skill.height}
-                    priority
+                    fill={true}
                   />
                 </Tooltip>
               </motion.div>

@@ -2,31 +2,34 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { Andada_Pro } from "next/font/google";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-// import { isMobile } from "react-device-detect";
+import { PortableText } from "@portabletext/react";
+import { Tooltip } from "../Tooltip";
 
 const andadaPro = Andada_Pro({
   weight: ["600"],
   subsets: ["latin"],
 });
 
-export interface SocialMediaDetailType {
+type SocialMediaCollection = {
   title: string;
-  link: string;
-  description: string;
-  icon: string;
+  url: string;
+  image: string;
+};
+
+export interface ContactType {
+  title: string;
+  textShadow: string;
+  description: any;
+  socialMedia: SocialMediaCollection[];
 }
 
 interface ContactProps {
-  socialMedia: SocialMediaDetailType[];
+  contact: ContactType;
   setCurrentHash: (value: string) => void;
   currentHash: string;
 }
 
-const Contact = ({
-  socialMedia,
-  setCurrentHash,
-  currentHash,
-}: ContactProps) => {
+const Contact = ({ contact, setCurrentHash, currentHash }: ContactProps) => {
   const contactRef = useRef<any>(null);
 
   const { scrollYProgress } = useScroll({
@@ -56,7 +59,7 @@ const Contact = ({
             ease: "easeInOut",
           }}
         >
-          CONTACT
+          {contact.textShadow}
         </motion.h2>
         <motion.h2
           className={`${andadaPro.className} text-[40px] md:text-[50px] absolute`}
@@ -68,7 +71,8 @@ const Contact = ({
             ease: "easeInOut",
           }}
         >
-          <span className="inline-block text-[#FFEE00]">_</span>Get In Touch
+          <span className="inline-block text-[#FFEE00]">_</span>
+          {contact.title}
         </motion.h2>
       </div>
 
@@ -82,58 +86,30 @@ const Contact = ({
             ease: "easeInOut",
             delay: 0.6,
           }}
-          className="lg:p-6 mb-6 lg:mb-0 w-full text-right mt-5 lg:mt-0 lg:w-2/3 order-2" // lg:order-1
+          className="lg:p-6 mb-6 lg:mb-0 w-full text-right mt-5 lg:mt-0 lg:w-2/3 order-2"
         >
-          <h1 className="text-[14px] lg:text-[24px]">
-            Let&apos;s discuss with me become even greater at what you do. so
-            excited to hear from you and let&apos;s start something special
-            together.
-            <span className="block">feel free to contact me ;)</span>
-            {/* <span className="block mt-2">
-              <strong className="block">
-              </strong>
-            </span> */}
-          </h1>
+          <PortableText value={contact.description} />
           <ul className="flex justify-end items-center space-x-5 mt-5 mb-5">
-            {socialMedia?.map((item) => {
+            {contact.socialMedia?.map((item) => {
               return (
                 <li key={item.title}>
-                  <a href={item.link} target="_blank">
-                    <Image
-                      className="relative hover:scale-[1.05] duration-100 cursor-pointer"
-                      src={`/assets/icons/${item.icon}`}
-                      alt={item.description}
-                      width={32}
-                      height={32}
-                      priority
-                    />
+                  <a href={item.url} target="_blank">
+                    <Tooltip text={item.title}>
+                      <Image
+                        className="relative hover:scale-[1.05] duration-100 cursor-pointer"
+                        src={item.image}
+                        alt={item.title}
+                        width={48}
+                        height={48}
+                        priority
+                      />
+                    </Tooltip>
                   </a>
                 </li>
               );
             })}
           </ul>
         </motion.div>
-
-        {/* <motion.div
-          viewport={{ once: true }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut",
-            delay: 0.8,
-          }}
-          className="order-1 lg:order-2 w-full lg:w-1/2"
-        >
-          <iframe
-            width="100%"
-            height={isMobile ? "200" : "250"}
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-            src=""
-          ></iframe>
-        </motion.div> */}
       </div>
     </section>
   );
