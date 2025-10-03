@@ -12,6 +12,11 @@ const VERCEL_URL = process.env.VERCEL_URL
 export const metadata: Metadata = {
   title: process.env.TITLE,
   description: process.env.DESCRIPTION,
+  icons: {
+     icon: [
+      { url: '/favicon-32x32.png', type: 'image/png' },
+    ],
+  },
   keywords: [
     "Hanif Putra",
     "Portfolio Website",
