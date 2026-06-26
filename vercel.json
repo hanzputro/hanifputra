@@ -1,4 +1,22 @@
 {
-  "trailingSlash":false,
-  "rewrites": [{ "source": "/studio/(.*)", "destination": "/studio/index.html" }]
+ "rewrites": [
+  {
+   "source": "/(.*)",
+   "destination": "/index.html"
+  }
+ ],
+ "redirects": [
+  {
+   "source": "/",
+   "destination": "/",
+   "permanent": false
+  }
+ ],
+ "redirects": [
+  {
+   "source": "/studio",
+   "destination": "/studio",
+   "permanent": false
+  }
+ ]
 }
