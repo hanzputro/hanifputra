@@ -1,4 +1,4 @@
 {
   "trailingSlash":false,
-  "rewrites": [{ "source": "/studio/(.*)", "destination": "/studio/index.html" }]
+  "rewrites": [{ "source": "/", "destination": "/index.html" }]
 }
