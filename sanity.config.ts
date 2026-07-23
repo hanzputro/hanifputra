@@ -19,9 +19,15 @@ import { schema } from "@/sanity/schemaTypes";
 // import customTemplates from "./sanity/templates";
 
 export default defineConfig({
-  basePath: "/studio",
-  projectId: process.env.NEXT_PUBLIC_SANITY_STUDIO_PROJECT_ID || process.env.SANITY_STUDIO_PROJECT_ID || '',
-  dataset: process.env.NEXT_PUBLIC_SANITY_STUDIO_DATASET || process.env.SANITY_STUDIO_DATASET || '',
+  basePath: "/",
+  projectId:
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_PROJECT_ID ||
+    process.env.SANITY_STUDIO_PROJECT_ID ||
+    "",
+  dataset:
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_DATASET ||
+    process.env.SANITY_STUDIO_DATASET ||
+    "",
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   plugins: [
     tags({}),
