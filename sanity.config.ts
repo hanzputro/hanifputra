@@ -20,6 +20,7 @@ import { schema } from "@/sanity/schemaTypes";
 
 export default defineConfig({
   basePath: "/",
+  studioBasePath: "/studio",
   projectId:
     process.env.NEXT_PUBLIC_SANITY_STUDIO_PROJECT_ID ||
     process.env.SANITY_STUDIO_PROJECT_ID ||
