@@ -45,8 +45,8 @@ const nextConfig = withPWA({
         pathname: "/images/**",
       },
     ],
-  },
-});
+  },  
+})
 module.exports = nextConfig;
 
 // // https://laros.io/how-to-get-the-current-url-with-nextjs-on-vercel

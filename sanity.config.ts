@@ -19,8 +19,7 @@ import { schema } from "@/sanity/schemaTypes";
 // import customTemplates from "./sanity/templates";
 
 export default defineConfig({
-  basePath: "/",
-  studioBasePath: "/studio",
+  basePath: "/studio",
   projectId:
     process.env.NEXT_PUBLIC_SANITY_STUDIO_PROJECT_ID ||
     process.env.SANITY_STUDIO_PROJECT_ID ||
