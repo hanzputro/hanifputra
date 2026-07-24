@@ -45,19 +45,7 @@ const nextConfig = withPWA({
         pathname: "/images/**",
       },
     ],
-  },
-  
-  // Fetch redirects from Sanity
-  async redirects() {
-    const redirects = await client.fetch(
-      `*[_type == "redirect"]{
-        "source":source.current, 
-        "destination":destination.current, 
-        permanent
-      }`,
-    );
-    return redirects;
-  }
+  },  
 })
 module.exports = nextConfig;
 
