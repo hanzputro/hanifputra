@@ -12,8 +12,9 @@ const dataset =
   process.env.SANITY_STUDIO_DATASET;
 
 export default defineCliConfig({
+  basePath: "/studio",
   api: { projectId, dataset },
-  studioHost: 'hanifputra',
+  studioHost: "hanifputra",
   vite: {
     resolve: {
       alias: {
